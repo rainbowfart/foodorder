@@ -15,7 +15,7 @@ class CreateProductTable extends Migration {
 		Schema::create('product', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('storeid')->index('storeid');
+			$table->integer('storeid');
 			$table->string('name', 32);
 			$table->boolean('size');
 			$table->boolean('hotcold');

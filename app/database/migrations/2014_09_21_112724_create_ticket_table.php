@@ -17,8 +17,11 @@ class CreateTicketTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('store')->index('store');
 			$table->timestamp('creation')->default(DB::raw('CURRENT_TIMESTAMP'));
-			$table->integer('opener')->index('opener');
+			$table->integer('opener')->index('opener')->references('id')->on('user')->onUpdate('RESTRICT')->onDelete('RESTRICT');
 			$table->integer('receiver')->index('receiver');
+			$table->foreign('store')->references('id')->on('storeinfo')->onUpdate('RESTRICT')->onDelete('CASCADE');
+			$table->foreign('opener')->references('id')->on('user')->onUpdate('RESTRICT')->onDelete('RESTRICT');
+			$table->foreign('receiver')->references('id')->on('user')->onUpdate('RESTRICT')->onDelete('RESTRICT');
 			$table->dateTime('closetime')->default('0000-00-00 00:00:00');
 			$table->boolean('state')->index('state');
 			$table->text('note')->nullable();
