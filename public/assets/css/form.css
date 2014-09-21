@@ -1,0 +1,218 @@
+/* Basic Grey */
+.basic-grey {
+    color: #333;
+    font: 1em Georgia, "Times New Roman", Times, serif;
+    width: 700px
+    z-index: 1;
+}
+.basic-grey h1>span {
+    display: block;
+    font-size: 1em;
+}
+.basic-grey label {
+    display: block;
+    margin: 0 0 5px;
+}
+.basic-grey label>span {
+    float: left;
+    margin-top: 10px;
+    padding-right: 10px;
+    text-align: right;
+    width: 200px;
+}
+.basic-grey input[type="text"], .basic-grey input[type="email"], .basic-grey textarea,.basic-grey select {
+    border: 1px solid #DADADA;
+    color: #2b572b;
+    font: normal 1em/1em Georgia, "Times New Roman", Times, serif;
+    height: 24px;
+    margin: 2px 6px 16px 0;
+    outline: 0 none;
+    padding: 3px 3px 3px 5px;
+    width: 50%;
+}
+.basic-grey input[type="checkbox"] {
+    height: 24px;
+    padding-top: 5px;
+    vertical-align: -6px;
+    width: 4%;
+}
+.basic-grey select {
+    background: #FFF;
+    height: 30px;
+    text-overflow: '';
+    width: 52%;
+}
+.basic-grey .button, button {
+    border: 1px solid #965f00;
+    background: none;
+    color: #000;
+    padding: 10px 20px 10px 20px;
+    text-shadow: 1px 1px 1px #fff;
+}
+.basic-grey .button:hover, button:hover {
+   opacity: 0.5;
+}
+/*按鈕*/
+.submitBox {
+    padding-left: 212px;
+    width: 320px;
+}
+.submitBox input[type="submit"], .submitBox input[type="reset"], .submitBox input[type="button"] {
+    display: inline;
+    border: 1px solid #965f00;
+    background: none;
+    width: 40%;
+}
+/*店家清單 Menu 顯示*/
+form[id^="editStoreInf"] {
+    position: relative;
+}
+a.showMenu {
+    display: block;
+    display: block;
+    overflow: hidden;
+    position: absolute;
+    width: 100px;
+}
+a.showMenu img {
+    width: 100px;
+}
+#menuBox {
+    display: none;
+    overflow: hidden;
+}
+/*表格*/
+table {
+    color: #7c7c7c;
+    font: 1em Georgia, lighter, "Times New Roman", Times, serif;
+    margin-left: 5px;
+    width: 650px;
+}
+table tr th {
+    padding: 15px 0;
+}
+table tr td {
+    border: 1px solid #a8a8a8;
+    color: #333;
+    font-size: 1em;
+    padding: 8px 0 8px 9px;
+}
+.number_right {
+    text-align: right;
+}
+.number_center {
+    text-align: center;
+}
+tr td input[type="text"] {
+    width: 50px;
+    margin-left: 20px;
+}
+/*cart*/
+#shoppingCart {
+    bottom: 200px;
+    border-radius: 200px;
+    background-color: darkseagreen;
+    background-size: 200px 200px;
+    height: 250px;
+    position: fixed;
+    right: 100px;
+    width: 250px;
+    z-index: 2;
+}
+.shoppingScript {
+    color: yellow;
+    height: 20px;
+    padding-top: 36px;
+    text-align: center;
+}
+.cart {
+    height: 115px;
+    margin: 12px auto 0 auto;
+    overflow-y: scroll;
+    width: 190px;
+}
+/*購物車個人訂購餐點*/
+.cartList {
+    color: #000;
+    text-align: right;
+    text-shadow: 1px 1px 1px #fff;
+}
+/*[x]*/
+.toDelete {
+    margin-left: 10px;
+}
+.toDelete:hover {
+    cursor: pointer;
+    opacity: 0.4;
+}
+/*已訂購清單*/
+.selectItem:hover {
+    background-color: orange;
+    cursor: pointer;
+}
+.selectItem:active {
+    background-color: #e09000;
+}
+/*刪除訂單icon*/
+.ui-icon {
+    display: inline;
+    margin: 0 auto;
+    opacity: 0.3;
+}
+.ui-icon:hover {
+    cursor: pointer;
+    opacity: 0.7;
+}
+.is-paid {
+    background-color: #faf2cc;
+}
+/*開單狀態*/
+.switchButton {
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    border: 1px solid;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #333;
+    color: #fff;
+    padding: 5px 5px;
+    margin-left: 300px;
+}
+._switchButton {
+    position: absolute;
+    right: 20px;
+    top: 2px;
+    border: 1px solid;
+    border-radius: 5px;
+    box-shadow: 1px 1px 1px #333;
+    color: #fff;
+    padding: 5px 5px;
+    margin-left: 300px;
+}
+.switchButton:hover {
+    cursor: pointer;
+}
+.switchButton:active {
+    cursor: pointer;
+}
+
+.btn-close, .btn-closed {
+    border-color: #46b8da;
+    background-color: #5bc0de;
+}
+.btn-close:hover {
+    background-color: #4f99b5;
+}
+.btn-close:active {
+    background-color: #387485;
+}
+.btn-open {
+    border-color: #4cae4c;
+    background-color: #5cb85c;
+}
+.btn-open:hover {
+    background-color: #509f50;
+}
+.btn-open:active {
+    background-color: #438543;
+}

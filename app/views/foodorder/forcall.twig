@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>叫餐資訊</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset2.0.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/form.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.4.custom.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css"/>
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+    </div>
+    <div id="nav">
+        {{ include('foodorder/nav.twig') }}
+    </div>
+    <div id="content">
+        <div class="accordian">
+                {% for o in orders %}
+                <h3><a href="#">{{ o.store.name }}</a></h3>
+                <div data-id="{{ o.store.id }}">
+                    <span>叫餐電話：{{ o.store.tel }}</span>
+                    <span>收單時間：{{ o.closetime|date('Y-m-d H:i') }}</span>
+                    <table class="forCall" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>餐點</th>
+                            <th>描述</th>
+                            <th>加點</th>
+                            <th>單價</th>
+                            <th>數量</th>
+                            <th>總價</th>
+                            <th>修改單價</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set lastpid = 0 %}
+                        {% set amount = 0 %}
+                        {% set number = 0 %}
+                        {% for ol in o.orderList %}
+                        <tr >
+                            <td>{{ ol.name }}</td>
+                            <td>{{ ol.size }} {{ ol.sugar }} {{ ol.ice }}</td>
+                            <td>{{ ol.state }}</td>
+                            <td class="price" data-unitPrice-id="{{ ol.pid }}">{{ ol.price }}</td>
+                            <td class="number_center" data-quantity-id="{{ ol.pid }}">{{ ol.quantity }}</td>
+                            <td class="number_right" data-price-id="{{ ol.pid }}">{%if ol.state == "是"  %}{{ ol.totalPrice * 0.1}}  {%set p = ol.totalPrice * 0.1%} +{%endif%}   {{ ol.totalPrice  }}</td>
+                            <td>
+                                {% if lastpid != ol.pid %}
+                                <input type="hidden" value="{{ o.pid }}" name="products[]">
+                                <input type="text" class="_price" data-id="{{ ol.pid }}" store-id="{{ o.store.id }}" value="{{ o.price }}" name="price[]">
+                            </td>
+                        </tr>
+                        {% endif %}
+                        {% set lastpid = ol.pid %}
+                        {% set amount = amount+ol.totalPrice + p %}
+                        {% set number = number+ol.quantity %}
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr  class="amount">
+                            <th>餐點</th>
+                            <th>描述</th>
+                            <th>加點</th>
+                            <th>單價</th>
+                            <th>數量 {{ number }}</th>
+                            <th>總價 <span data-id="amount">{{ amount }}</span></th>
+                            <th>修改單價</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+</div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="assets/js/jquery.form.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/cookie-custom.js"></script>
+    <script src="assets/js/jquery.custom-orderSystem-management.js"></script>
+    <script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+    <script>
+        $(".accordian, #storeList").accordion({
+            heightStyle: "content",
+            collapsible: true,
+            active: false
+        });
+        $('.forCall').dataTable();
+    </script>
+</body>
+</html>

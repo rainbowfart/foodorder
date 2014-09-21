@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>收銀</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset2.0.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/form.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.4.custom.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css"/>
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+    </div>
+    <div id="nav">
+        {{ include('foodorder/nav.twig') }}
+    </div>
+    <div id="content">
+                <div class="accordian">
+                {% for o in orders %}
+                <h3><a href="#">{{ o.store.name }}</a></h3>
+                <div>
+                    <span>收銀台：{{ o.receiver.name }}</span>
+                    <span>收銀部門：{{ o.receiver.area.name }}</span>
+                    <table class="cash-list" data-id="{{ o.id }}" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th class='cl1'>部門</th>
+                            <th class='cl2'>名字</th>
+                            <th class='cln'>品項</th>
+                            <th class='cln'>描述</th>
+                            <th class='cln'>單價</th>
+                            <th class='cln'>數量</th>
+                            <th class='cl3'>應收</th>
+                            <th class='cl4'>已結清</th>
+                        </tr>
+                        </thead>
+                        <tfoot>
+                        <tr>
+                            <th>部門</th>
+                            <th>名字</th>
+                            <th>品項</th>
+                            <th>描述</th>
+                            <th>單價</th>
+                            <th>數量</th>
+                            <th>應收</th>
+                            <th>已結清</th>
+                        </tr>
+                        </tfoot>
+                        <tbody>
+                        {% for depart in o.cashList %}
+                        {% for user in depart.users %}
+                        {% for uo in user.orders %}
+                        <tr>
+                            <td data-id="{{ depart.id }}">{{ depart.name }}</td>
+                            <td data-id="{{ user.uid }}">{{ user.name }}</td>
+                            <td>{{ uo.name }}</td>
+                            <td>{{ uo.sugar }}{{ uo.ice }}{{ uo.size }}</td>
+                            <td>{{ uo.price }}</td>
+                            <td>{{ uo.quantity }}</td>
+                            {% if uo.paid == false %}
+                                <td>{{ user.unpayment }}</td>
+                            {% endif %}
+                            {% if uo.paid == true %}
+                                <td><span data-user-id="{{ user.uid }}">{{ user.payment }}</span></td>
+                            {% endif %}
+                            <td class="payment{% if uo.paid == true %} is-paid {% endif %}" data-id="{{ o.id }}">
+                                {% if uo.paid == false %}
+                                <span data-user-id="{{ user.uid }}" title="點擊結清" class="ui-icon ui-icon-closethick">0</span>
+                                {% endif %}
+                                {% if uo.paid == true %}
+                                <span data-user-id="{{ user.uid }}" title="已繳清" class="ui-icon ui-icon-check">1</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% endfor %}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+    <script src="assets/js/jquery.form.js"></script>
+    <script src="assets/js/jquery.cookie.js"></script>
+    <script src="assets/js/cookie-custom.js"></script>
+    <script src="assets/js/jquery.mergecell.js"></script>
+    <script src="assets/js/jquery.custom-orderSystem-management.js"></script>
+    <script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+    <script>
+        $(".accordian, #storeList").accordion({
+            heightStyle: "content",
+            collapsible: true,
+            active: false
+        });
+        $('.cash-list').dataTable(
+        {
+            "aoColumnDefs": [
+              { 'bSortable': false, 'aTargets': [ 2,3,4,5 ] }
+           ]
+        }
+        );
+        $('table.cash-list').mergeCell({
+            cols: [0, 1, 6, 7]
+        });
+    </script>
+</body>
+</html>

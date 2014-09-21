@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>開單</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset2.0.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/form.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.4.custom.css">
+    <link rel="stylesheet" type="text/css" href="assets/js/fancybox/jquery.fancybox.css">
+
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+    </div>
+    <div id="nav">
+        {{ include('foodorder/nav.twig') }}
+    </div>
+    <div id="content">
+        <div class="accordian">
+            <h3><a href="#">新增店家</a></h3>
+            <div class="basic-grey">
+                <form id="newStore" action="/store/add/{{ id }}" method="POST" enctype="multipart/form-data">
+                    <label>
+                        <span>店家</span>
+                        <input type="text" name="name" placeholder="店家名稱">
+                    </label>
+                    <label>
+                        <span>外送電話</span>
+                        <input type="text" name="tel" placeholder="外送電話">
+                    </label>
+                    <label>
+                        <span>菜單上傳</span>
+                        <input type="file" name="menu">
+                    </label>
+                    <label>
+                        <span>備註</span>
+                        <input type="text" name="memo" placeholder="其他須知">
+                    </label>
+                    <div class="submitBox">
+                        <input type="submit" name="addStore" value="新增店家" class="button">
+                        <input type="reset"  value="重設" class="button">
+                    </div>
+                </form>
+            </div>
+            <h3><a href="#">開單</a></h3>
+            <div class="basic-grey">
+                <form id="newOpen" action="/open/persist" method="POST" enctype="multipart/form-data">
+                    <label>
+                        <span>開單人</span>
+                        <input type="text" name="host_name" id="host_name" placeholder="輸入開單人名字">
+                    </label>
+                    <label>
+                        <span>開單部門</span>
+                        <select autofocus name="host_depart" id="host_depart">
+                            {% for depart in departs %}
+                            <option value="{{depart.id}}">{{ depart.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        <span>收銀台</span>
+                        <input type="text" name="account_name" id="account_name" placeholder="負責收銀的人">
+                    </label>
+                    <label>
+                        <span>收銀部門</span>
+                        <select autofocus name="account_depart" id="account_depart">？
+                            {% for depart in departs %}
+                            <option value="{{ depart.id }}">{{ depart.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        <span>收單時間</span>
+                        <input type="text" name="deadLine" id="deadLine"  placeholder="西元年-月-日 時：分">
+                    </label>
+                    <label>
+                        <span>店家名稱</span>
+                        <select name="store" id="store" autofocus>
+                            {% for store in stores %}
+                            <option value="{{ store.id }}">{{ store.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+                    <label>
+                        <span>備註</span>
+                        <input type="text" name="memo" id="memo" placeholder="其他須知">
+                    </label>
+                    <div class="submitBox">
+                        <input type="submit" name="open" value="建立開單" class="button">
+                        <input type="reset"  value="重設" class="button">
+                    </div>
+                </form>
+            </div>
+            <h3><a href="#">店家清單</a></h3>
+            <div id="storeList">
+            {% for s in stores %}
+                <h3 data-id="{{ s.id }}"><a href="#">{{ s.name }}</a></h3>
+                <div data-id="{{ s.id }}" class="basic-grey">
+                    <form id="editStoreInf_{{ s.id }}" action="/store/edit" method="POST" enctype="multipart/form-data">
+                        <a class="showMenu" href="#menuBox"></a>
+                        <input type="hidden" name="sid" value="{{ s.id }}">
+                        <label>
+                            <span>店家名稱</span>
+                            <input type="text" name="name" value="{{ s.name }}"/>
+                        </label>
+                        <label>
+                            <span>外送電話</span>
+                            <input type="text" name="tel"  value="{{ s.tel }}"/>
+                        </label>
+                        <label>
+                            <span>菜單修改</span>
+                            <input type="file" name="menu" value="{{ s.menu }}">
+                        </label>
+                        <label>
+                            <span>備註</span>
+                            <input type="text" name="memo" value="{{ s.memo }}"/>
+                        </label>
+                        <div class="submitBox">
+                            <input type="submit" name="editStore" value="修改資料" class="button">
+                            <input type="reset"  value="重設" class="button">
+                            <input type="button" data-id="{{ s.id }}" name="delete" value="整筆刪除" class="button"></button>
+                        </div>
+                    </form>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div id="menuBox"><!-- JavaScript --></div>
+    </div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="assets/js/jquery.form.js"></script>
+<script src="assets/js/jquery.cookie.js"></script>
+<script src="assets/js/cookie-custom.js"></script>
+<script src="assets/js/jquery.timepicker.js"></script>
+<script src="assets/js/fancybox/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.custom-orderSystem-open.js"></script>
+<script>
+    $('.accordian, #storeList').accordion({
+        heightStyle: "content",
+        collapsible: true,
+        active: false
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset2.0.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/form.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.4.custom.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css"/>
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+    </div>
+    <div id="nav">
+        {{ include('foodorder/nav.twig') }}
+    </div>
+    <div id="content">
+        <div class="accordian">
+                {% for o in orders %}
+                <h3>
+                    <a href="#">{{ o.store.name }}</a>
+                    {% if o.open %}
+                    <span data-id="{{ o.id }}" class="switchButton btn-open" title="點擊收單">開單狀態：開單</span>
+                    {% endif %}
+                    {% if not o.open %}
+                    <span data-id="{{ o.id }}" class="switchButton btn-closed" title="已收單無法進行點餐">開單狀態：收單</span>
+                    {% endif %}
+                </h3>
+                <div>
+                    <span>收單時間：{{ o.closetime|date('Y-m-d H:i') }}</span>
+                    <span>收銀台：{{ o.receiver.name }}</span>
+                    <span>收銀部門：{{ o.receiver.area.name }}</span>
+                    <table class="modified" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>部門</th>
+                            <th>餐點</th>
+                            <th>描述</th>
+                            <th>數量</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in o.orders %}
+                        <tr data-user-id="{{ item.uoid }}">
+                            <td><span title="刪除餐點" data-store-id="{{ o.id }}" data-user-id="{{ item.uoid }}" data-delete="deleteItem" class="ui-icon ui-icon-circle-close"></span>{{ item.user }}</td>
+                            <td>{{ item.depart }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.sugar }}{{ item.ice }}{{ item.size }}</td>
+                            <td>{{ item.quantity }}</td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>姓名</th>
+                            <th>部門</th>
+                            <th>餐點</th>
+                            <th>描述</th>
+                            <th>數量</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="assets/js/jquery.form.js"></script>
+<script src="assets/js/jquery.cookie.js"></script>
+<script src="assets/js/cookie-custom.js"></script>
+<script src="assets/js/jquery.custom-orderSystem-management.js"></script>
+<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<script>
+    $(".accordian, #storeList").accordion({
+        heightStyle: "content",
+        collapsible: true,
+        active: false
+    });
+    $('.modified').dataTable();
+</script>
+</body>
+</html>

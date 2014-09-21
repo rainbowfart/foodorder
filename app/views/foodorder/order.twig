@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>點餐</title>
+    <base href="/">
+    <link rel="stylesheet" type="text/css" href="assets/css/reset2.0.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/form.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery-ui-1.10.4.custom.css">
+    <link rel="stylesheet" type="text/css" href="assets/js/fancybox/jquery.fancybox.css">
+</head>
+<body>
+<div id="wrapper">
+    <div id="header">
+    </div>
+    <div id="nav">
+        {{ include('foodorder/nav.twig') }}
+    </div>
+    <div id="content">
+        <div id="cart">
+        {{ include ('cart.twig')}}
+        </div>
+        <div class="accordian">
+            {% for o in orders %}
+            <h3><a href="#">{{ o.store.name }}</a> <span class="showMenu" href="#menuBox" data-storeId="{{ o.store.id }}">[menu]</span></h3>
+            <div class="basic-grey accordian">
+                收單時間:{{ o.closetime|date('Y-m-d H:i') }}店家備註:{{ o.store.memo }} 訂單備註:{{ o.note }}
+                <h3><a href="#">已訂購清單</a></h3>
+                <div class=" basic-grey">
+                <table id="orderList" data-id="{{ o.id }}">
+                    {% for ol in o.orderList %}
+                    <tr class="selectItem" data-select="{{ol.uniqueId}}">
+                        <td class="number_center"> {{ ol.name }} </td>
+                        <td class="number_center"> {{ ol.sugar }}{{ ol.ice }}{{ ol.size }} </td>
+                        <td class="number_center"> {{ ol.quantity }} </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                </div>
+                <h3><a class=href="#">自訂點餐</a></h3>
+                <div class="basic-grey">
+                    <form id="newOrder" action="/order/userorder/add" method="POST" enctype="multipart/form-data" data-id="{{o.store.id}}">
+                        <input type="hidden" name="oid" value="{{ o.id }}"/>
+                        <label>
+                            <span>選擇品項</span>
+                            <select name="productPreInput">
+                                <option value="">點擊選擇</option>
+                                {% for pl in o.productList %}
+                                <option value="{{ pl }}">{{ pl }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label>
+                            <span>或輸入品項</span>
+                            <input type="text" name="productName" placeholder="品項名稱">
+                        </label>
+                        <label>
+                            <span>容量</span>
+                            <select name="productSize">
+                                <option value="">點擊選擇</option>
+                                <option value="大">大</option>
+                                <option value="中">中</option>
+                                <option value="小">小</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>糖份</span>
+                            <select name="sugar">
+                                <option value="">點擊選擇</option>
+                                <option value="無糖">無糖</option>
+                                <option value="微糖">微糖</option>
+                                <option value="少糖">少糖</option>
+                                <option value="半糖">半糖</option>
+                                <option value="全糖">全糖</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>冰量</span>
+                            <select name="ice">
+                                <option value="">點擊選擇</option>
+                                <option value="去冰">去冰</option>
+                                <option value="微冰">微冰</option>
+                                <option value="少冰">少冰</option>
+                                <option value="正常冰">正常冰</option>
+                                <option value="常溫">常溫</option>
+                                <option value="熱">熱</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>數量</span>
+                            <select name="preQuantity">
+                                <option value="">點擊選擇</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>輸入數量</span>
+                            <input type="text" name="quantity" placeholder="數量大於4？"/>
+                        </label>
+                        <div class="submitBox">
+                            <input type="submit" name="submit" value="點餐" class="button">
+                            <input type="reset" name="reset" value="重設" class="button">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+            <div id="menuBox"><!-- JavaScript --></div>
+    </div>
+</div>
+</div>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="assets/js/jquery.form.js"></script>
+<script src="assets/js/jquery.cookie.js"></script>
+<script src="assets/js/cookie-custom.js"></script>
+<script src="assets/js/fancybox/jquery.fancybox.js"></script>
+<script src="assets/js/jquery.custom-orderSystem-order.js"></script>
+<script>
+    $('.accordian, #storeList').accordion({
+        heightStyle: "content",
+        collapsible: true,
+        active: false
+    });
+</script>
+</body>
+</html>

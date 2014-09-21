@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div id="shoppingCart">
+    <p class="shoppingScript"><span>{{ user.name }}{{ user.area.name }}</span><span title="清除" class="toDelete">[X]</span></p>
+        <ul class="cart">
+            {% for o in user.uoList %}
+            <li class="cartList" data-user-id="{{ o.uoid }}" data-seleted="{{ o.uniqueId }}">{{ o.name }}{{ o.sugar }}{{ o.ice }}{{ o.size }}<input size="1px" type="text" value="{{ o.quantity }}"></li>
+            {% endfor %}
+        </ul>
+</div>
+</body>
+</html>
+<script>
+</script>
