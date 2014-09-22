@@ -1,7 +1,9 @@
 // ajax for add store list
 var option = {
     success: function(data) {
-        var json = JSON.parse(data);
+        // var json = JSON.parse(data);
+        var json = data;
+        // if (!json.error) {
         if (json.result) {
             var template = ' <h3 data-id="'+json.id+'"><a href="#">'+json.name+'</a></h3> \
                 <div data-id="'+json.id+'" class="basic-grey"> \
@@ -27,7 +29,8 @@ var option = {
             $(".accordian").accordion({active: 1});
             showMenu();
         } else {
-            alert(json.error);
+            // alert(json.error);
+            alert(json);
         }
     }
 };
@@ -41,7 +44,8 @@ $(document).on('click', 'input[name="delete"]', function() {
         url: "/store/del",
         data: { sid: storeId },
         success: function(data) {
-            var json = JSON.parse(data);
+            // var json = JSON.parse(data);
+            var json = data;
             if (json.result) {
                 $('div[data-id='+ storeId +'], h3[data-id='+ storeId +']').remove();
             }

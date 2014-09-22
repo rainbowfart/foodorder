@@ -6,4 +6,5 @@
 class UserOrder extends Eloquent
 {
     protected $table = 'ordering';
+    public $timestamps = false;
 }

@@ -6,4 +6,5 @@
 class Order extends Eloquent
 {
     protected $table = 'ticket';
+    public $timestamps = false;
 }

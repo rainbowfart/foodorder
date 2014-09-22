@@ -11,16 +11,30 @@
 |
 */
 
-Route::get('/', function()
-{
-    $departs = Depart::all();
-    header("Content-Type: text/plain; charset=utf-8");
-    var_dump($departs[0]->name);
-	// return View::make('hello');
-});
+Route::get('/', 'OrderController@index');
 
-
-/*
-    Foodorder routing config !
-*/
 Route::get('open', 'OpenController@index');
+Route::post('open/persist', 'OpenController@persist');
+
+Route::post('store/add', 'StoreController@create');
+Route::post('store/edit', 'StoreController@edit');
+Route::post('store/del', 'StoreController@delete');
+Route::get('store/menu/{id}', 'StoreController@getMenu');
+
+Route::get('order', 'OrderController@index');
+Route::get('order/userorder/cart', 'OrderController@cart');
+
+Route::post('order/userorder/add', 'OrderController@add');
+Route::post('order/userorder/edit', 'OrderController@edit');
+Route::post('order/userorder/del', 'OrderController@delete');
+
+Route::get('forcall', 'ForcallController@index');
+Route::post('manage/price/edit', 'ForcallController@editPrice');
+
+Route::get('statement', 'StatementController@index');
+Route::post('manage/userorder/pay', 'StatementController@checkPayment');
+
+Route::get('modified', 'ModifyController@index');
+Route::post('manage/order/edit', 'ModifyController@editOrder');
+Route::post('manage/userorder/edit', 'ModifyController@editUserOrder');
+Route::post('manage/userorder/del', 'ModifyController@deleteUserOrder');
