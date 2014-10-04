@@ -12,6 +12,7 @@ class Store extends Ardent
         'tel' => 'required|min:9', // for 10 now
         'menu' => 'required|image',
     );
+
     // custom error messages
     public static $customMessages = array(
         'required' => 'The :attribute field is required.',

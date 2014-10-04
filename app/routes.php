@@ -34,7 +34,7 @@ Route::post('manage/price/edit', 'ForcallController@editPrice');
 Route::get('statement', 'StatementController@index');
 Route::post('manage/userorder/pay', 'StatementController@checkPayment');
 
-Route::get('modified', 'ModifyController@index');
+Route::get('modify', 'ModifyController@index');
 Route::post('manage/order/edit', 'ModifyController@editOrder');
 Route::post('manage/userorder/edit', 'ModifyController@editUserOrder');
 Route::post('manage/userorder/del', 'ModifyController@deleteUserOrder');
