@@ -2,7 +2,7 @@
 /*
     an api shit
 */
-class StoreController extends BaseController 
+class StoreController extends BaseController
 {
     // Pretty fine with this method
     public function create()
@@ -21,8 +21,12 @@ class StoreController extends BaseController
 
         if (!$result) {
             $img ? unlink($img) : false;
+            $json = array(
+                'result' => false,
+                'error' => $s->errors()->all()
+            );
 
-            return $s->errors()->all();
+            return $json;
         }
 
         $s->result = true;
@@ -60,7 +64,12 @@ class StoreController extends BaseController
 
             return $s;
         } else {
-            return $s->errors()->all();
+            $json = array(
+                'result' => false,
+                'error' => $s->errors()->all()
+            );
+
+            return $json;
         }
     }
 
@@ -77,10 +86,10 @@ class StoreController extends BaseController
         }
 
         if (Store::find(Input::get('sid'))) {
-            return Response::json(array('result' => false));
+            return array('result' => false);
         }
 
-        return Response::json(array('result' => true));
+        return array('result' => true);
     }
 
     public function getMenu($id)

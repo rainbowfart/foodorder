@@ -28,8 +28,7 @@ var option = {
             $(".accordian").accordion({active: 1});
             showMenu();
         } else {
-            // alert(json.error);
-            alert(json);
+            alert(json.error);
         }
     }
 };

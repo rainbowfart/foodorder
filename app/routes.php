@@ -14,7 +14,7 @@
 Route::get('/', 'OrderController@index');
 
 Route::get('open', 'OpenController@index');
-Route::post('open/persist', 'OpenController@persist');
+Route::post('open/persist', 'OpenController@create');
 
 Route::post('store/add', 'StoreController@create');
 Route::post('store/edit', 'StoreController@edit');
