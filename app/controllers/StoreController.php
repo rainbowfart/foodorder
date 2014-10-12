@@ -80,7 +80,7 @@ class StoreController extends BaseController
 
         if ($s) {
             $old_img = $s->menu;
-            $old_img ? unlink($old_img) : false;
+            file_exists($old_img) ? unlink($old_img) : false;
 
             $s->delete();
         }

@@ -16,16 +16,16 @@ class OpenController extends BaseController {
     public function create()
     {
         // get user first, create it if not exist
-        $opener = User::findBy new User();
-        $receiver = new User();
+        // $opener = User::findBy new User();
+        // $receiver = new User();
 
         // then create an order
-        $o = new Order;
-        $o->store = Input::get('store');
-        $o->opener = ;
-        $o->receiver = ;
-        $o->closetime = Input::get('deadline');
-        $o-> = Input::get('memo');
+        // $o = new Order;
+        // $o->store = Input::get('store');
+        // $o->opener = ;
+        // $o->receiver = ;
+        // $o->closetime = Input::get('deadline');
+        // $o-> = Input::get('memo');
 
         return Input::get();
     }
